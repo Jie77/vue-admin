@@ -1,22 +1,36 @@
 <template>
     <div class="layout-container">
         <my-header></my-header>
-        <my-aside></my-aside>
-        <my-main></my-main>
+        <div class="middle">
+            <div class="main-content">
+                <router-view></router-view>
+            </div>
+            <my-aside></my-aside>
+        </div>
     </div>
 </template>
 <script>
 import MyHeader from './header'
 import MyAside from './aside'
-import MyMain from './main'
 export default {
     components: {
         MyHeader,
-        MyAside,
-        MyMain
+        MyAside
     }
 }
 </script>
-<style>
-
+<style lang="scss">
+    .layout-container {
+        overflow: hidden;
+        background: #F2F2F2;
+        .middle {
+            min-width: 500px;
+            margin-top: 70px;
+            padding: 20px 20px 0 200px;
+            .main-content {
+                width: 100%;
+                float: left;
+            }
+        }
+    }
 </style>

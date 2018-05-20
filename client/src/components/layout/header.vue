@@ -17,10 +17,14 @@ export default {
 </script>
 <style lang="scss">
 .header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 60px;
+    height: 70px;
     background: #324057;
-    line-height: 60px;
+    line-height: 70px;
+    z-index: 10;
     .user {
         position: absolute;
         right: 30px;
