@@ -22,6 +22,7 @@ export default {
 <style lang="scss">
     .layout-container {
         overflow: hidden;
+        min-height: 100%;
         background: #F2F2F2;
         .middle {
             min-width: 500px;

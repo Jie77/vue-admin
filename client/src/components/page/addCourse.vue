@@ -1,7 +1,7 @@
 <template>
     <div class="ac-container">
         <div class="add-course">
-            <div class="title">
+            <div class="ac-title">
                 <h2>选课</h2>
             </div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
@@ -18,7 +18,7 @@
                 </el-form>
         </div>
         <div class="course-list">
-            <div class="title">
+            <div class="ac-title">
                 <h2>可选课程</h2>
             </div>
             <el-table
@@ -35,7 +35,11 @@
                     label="课程名"
                     >
                 </el-table-column>
-                
+                <el-table-column
+                    prop="courseScore"
+                    label="学分"
+                    >
+                </el-table-column>
             </el-table>
         </div>
     </div>
@@ -59,43 +63,53 @@ export default {
             course: [
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 },
                 {
                     courseID: 'CH0001',
-                    courseName: '课程一'
+                    courseName: '课程一',
+                    courseScore: '10'
                 }
             ]
         }
@@ -127,7 +141,7 @@ export default {
 }
 .ac-container {
     width: 100%;
-    .title {
+    .ac-title {
         padding-bottom: 30px;
         border-bottom: 1px solid #e5e5e5;
         margin-bottom: 30px;
