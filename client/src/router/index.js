@@ -13,10 +13,9 @@ import adminDelCourse from '@/page/admin/delCourse'
 import adminDownloadDoc from '@/page/admin/downloadDoc'
 import adminAddStu from '@/page/admin/addstu'
 
-
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -37,46 +36,81 @@ export default new Router({
       path: '/layout',
       name: 'layout',
       component: LayOut,
+      meta: { 
+        auth: true
+      },
       children: [
         {
           path: 'addcourse',
           name: 'addcourse',
-          component: AddCourse
+          component: AddCourse,
+          meta: { 
+            auth: true,
+            role: 'stu'
+          }
         },
         {
           path: 'delcourse',
           name: 'delcourse',
-          component: DelCourse
+          component: DelCourse,
+          meta: { 
+            auth: true,
+            role: 'stu'
+          }
         },
         {
           path: 'downloaddoc',
           name: 'downloaddoc',
-          component: DownloadDoc
+          component: DownloadDoc,
+          meta: { 
+            auth: true,
+            role: 'stu'
+          }
         },
         {
           path: 'studoc',
           name: 'studoc',
-          component: StuDoc
+          component: StuDoc,
+          meta: { 
+            auth: true,
+            role: 'stu'
+          }
         },
         {
           path: 'adminaddcourse',
           name: 'adminaddcourse',
-          component: adminAddCourse
+          component: adminAddCourse,
+          meta: { 
+            auth: true,
+            role: 'admin'
+          }
         },
         {
           path: 'admindelcourse',
           name: 'admindelcourse',
-          component: adminDelCourse
+          component: adminDelCourse,
+          meta: { 
+            auth: true,
+            role: 'admin'
+          }
         },
         {
           path: 'admindownloaddoc',
           name: 'admindownloaddoc',
-          component: adminDownloadDoc
+          component: adminDownloadDoc,
+          meta: { 
+            auth: true,
+            role: 'admin'
+          }
         },
         {
           path: 'adminaddstu',
           name: 'adminaddstu',
-          component: adminAddStu
+          component: adminAddStu,
+          meta: { 
+            auth: true,
+            role: 'admin'
+          }
         }
       ]
     },
@@ -87,3 +121,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

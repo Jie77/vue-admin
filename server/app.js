@@ -2,6 +2,7 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const Route = require('koa-router')
 const cors = require('koa2-cors')
+const jwt = require('jsonwebtoken')
 const Port = 3000
 
 const app = new Koa()
@@ -13,8 +14,15 @@ app.use(cors({
   }))
 
 router.post('/login', (ctx, next)=>{
+    let userInfo = ctx.request.body
+    let payload = {
+        userName: userInfo.user,
+        role: 'stu'
+    }
+    let secret = 'jiangjie666'
+    let token = jwt.sign(payload, secret);
     ctx.body = {
-        token: 'token.dG9rZW4NCg==.secret',
+        'token': token,
     } 
 })
 

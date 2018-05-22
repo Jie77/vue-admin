@@ -2,7 +2,7 @@
     <div class="header-container">
         <el-dropdown class="user">
             <span class="el-dropdown-link">
-                <i class="el-icon-setting el-icon--left"></i>管理员
+                <i class="el-icon-setting el-icon--left"></i>{{ userName }}
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>退出登录</el-dropdown-item>
@@ -12,7 +12,11 @@
 </template>
 <script>
 export default {
-    
+    computed: {
+        userName() {
+            this.$store.getters.userName
+        } 
+    }
 }
 </script>
 <style lang="scss">

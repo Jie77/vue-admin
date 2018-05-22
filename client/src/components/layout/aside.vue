@@ -14,11 +14,10 @@
     </div>
 </template>
 <script>
-import navList from '@/conf/stuNav'
 export default {
-    data () {
-        return {
-            navList
+    computed: {
+        navList() {
+            return this.$store.getters.nav
         }
     }
 }

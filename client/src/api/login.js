@@ -11,11 +11,3 @@ export function loginByName(user, pwd) {
         data: param
     })
 }
-
-export function saveToken(token){
-    sessionStorage.setItem('token', token)
-}
-
-export function loginOut(){
-    sessionStorage.removeItem('token')
-}

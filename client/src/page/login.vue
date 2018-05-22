@@ -2,7 +2,7 @@
   <div class="login-container">
     <h1>登录</h1>
     <el-input class="login-input" v-model="userInfo.user" placeholder="请输入用户名"></el-input>
-    <el-input class="login-input" v-model="userInfo.pwd" placeholder="请输入密码"></el-input>
+    <el-input class="login-input" v-model="userInfo.pwd" placeholder="请输入密码" type="password"></el-input>
     <div class="btn-box">
       <el-button type="primary" class="login-btn" @click="submit">登录</el-button>
       <el-button type="primary" class="login-btn" @click="toReg">注册</el-button>
