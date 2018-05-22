@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/page/login'
-import NotFound from '@/components/page/notFound'
 import LayOut from '@/components/layout/layout'
-import AddCourse from '@/components/page/addCourse'
-import DelCourse from '@/components/page/delCourse'
-import DownloadDoc from '@/components/page/downloadDoc'
-import StuDoc from '@/components/page/stuDoc'
+import Login from '@/page/login'
+import Register from '@/page/register'
+import NotFound from '@/page/notFound'
+import AddCourse from '@/page/stu/addCourse'
+import DelCourse from '@/page/stu/delCourse'
+import DownloadDoc from '@/page/stu/downloadDoc'
+import StuDoc from '@/page/stu/stuDoc'
+import adminAddCourse from '@/page/admin/addCourse'
+import adminDelCourse from '@/page/admin/delCourse'
+import adminDownloadDoc from '@/page/admin/downloadDoc'
+import adminAddStu from '@/page/admin/addstu'
+
 
 Vue.use(Router)
 
@@ -21,6 +27,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/layout',
@@ -46,6 +57,26 @@ export default new Router({
           path: 'studoc',
           name: 'studoc',
           component: StuDoc
+        },
+        {
+          path: 'adminaddcourse',
+          name: 'adminaddcourse',
+          component: adminAddCourse
+        },
+        {
+          path: 'admindelcourse',
+          name: 'admindelcourse',
+          component: adminDelCourse
+        },
+        {
+          path: 'admindownloaddoc',
+          name: 'admindownloaddoc',
+          component: adminDownloadDoc
+        },
+        {
+          path: 'adminaddstu',
+          name: 'adminaddstu',
+          component: adminAddStu
         }
       ]
     },
