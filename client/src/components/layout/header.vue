@@ -1,6 +1,6 @@
 <template>
     <div class="header-container">
-        <el-dropdown class="user">
+        <el-dropdown class="user" @command="handleCommand">
             <span class="el-dropdown-link">
                 <i class="el-icon-setting el-icon--left"></i>{{ userName }}
             </span>
@@ -11,11 +11,17 @@
     </div>
 </template>
 <script>
+import { getName, loginOut } from '@/api/auth'
 export default {
     computed: {
         userName() {
-            this.$store.getters.userName
+            return getName()
         } 
+    },
+    methods: {
+        handleCommand() {
+            loginOut()
+        }
     }
 }
 </script>

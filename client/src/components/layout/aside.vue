@@ -14,10 +14,11 @@
     </div>
 </template>
 <script>
+import { getNav } from '@/api/auth'
 export default {
     computed: {
         navList() {
-            return this.$store.getters.nav
+            return getNav()
         }
     }
 }

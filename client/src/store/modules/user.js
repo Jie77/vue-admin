@@ -1,5 +1,5 @@
 import { loginByName } from '@/api/login'
-import { saveToken } from '@/api/auth'
+import { saveToken, saveName, saveRole, saveNav} from '@/api/auth'
 import base64url from "base64url"
 import nav from '@/conf/navList'
 
@@ -47,6 +47,9 @@ const user = {
                     commit('SET_ROLE', user.role)
                     commit('SET_NAV', permissionNav)
                     saveToken(token)
+                    saveName(user.userName)
+                    saveRole(user.role)
+                    saveNav(permissionNav)
                     resolve()
                 }).catch(error => {
                     reject(error)

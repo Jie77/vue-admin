@@ -17,7 +17,7 @@ router.post('/login', (ctx, next)=>{
     let userInfo = ctx.request.body
     let payload = {
         userName: userInfo.user,
-        role: 'stu'
+        role: 'admin'
     }
     let secret = 'jiangjie666'
     let token = jwt.sign(payload, secret);

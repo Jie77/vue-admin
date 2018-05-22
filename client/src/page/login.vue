@@ -23,7 +23,11 @@ export default {
   methods: {
     submit(){
       this.$store.dispatch('Login', this.userInfo).then(() => {
-        this.$router.push('/layout/studoc')
+        if(this.$store.getters.role === 'stu'){
+          this.$router.push('/layout/studoc')
+        }else if(this.$store.getters.role === 'admin'){
+          this.$router.push('/layout/adminaddcourse')
+        }
       }).catch(() => {
         alert('登录失败')
       })
