@@ -1,42 +1,44 @@
 
-export function saveToken(token){
+export const saveToken = function(token) {
     sessionStorage.setItem('token', token)
 }
 
-export function getToken(){
+export const getToken = function() {
     return sessionStorage.getItem('token')
 }
 
-export function saveRole(role){
+export const saveRole = function(role) {
     sessionStorage.setItem('role', role)
 }
 
-export function getRole(){
+export const getRole = function() {
     return sessionStorage.getItem('role')
 }
 
-export function saveName(name){
+export const saveName = function(name) {
     sessionStorage.setItem('name', name)
 }
 
-export function getName(){
+export const getName = function() {
     return sessionStorage.getItem('name')
 }
 
-export function saveNav(nav){
+export const saveNav = function(nav) {
     sessionStorage.setItem('nav', JSON.stringify(nav))
 }
 
-export function getNav(){
+export const getNav = function() {
     return JSON.parse(sessionStorage.getItem('nav'))
 }
 
 
-export function loginOut(){
+export const loginOut = function() {
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('role')
     sessionStorage.removeItem('name')
     sessionStorage.removeItem('nav')
-    window.location.reload()
+    setTimeout(() => {
+        window.location.reload()
+    },100)
 }
 
