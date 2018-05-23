@@ -4,13 +4,12 @@
     <el-input class="login-input" v-model="user" placeholder="请输入用户名"></el-input>
     <el-input class="login-input" v-model="pwd" placeholder="请输入密码" type="password"></el-input>
     <div class="btn-box">
-      <el-button type="primary" class="login-btn" @click="submit">登录</el-button>
-      <el-button type="primary" class="login-btn">注册</el-button>
+      <el-button type="primary" class="login-btn" @click="submit">注册</el-button>
     </div>
   </div>
 </template>
 <script>
-
+import { registByName } from '@/api/login'
 export default {
   data() {
     return {
@@ -20,7 +19,12 @@ export default {
   },
   methods: {
     submit(){
-      this.$router.push('/layout/studoc')
+      console.log('hhh')
+      registByName(this.user, this.pwd).then(() => {
+        console.log("success")
+      }).catch((error) => {
+        console.log('error' + error)
+      })
     }
   }
 }

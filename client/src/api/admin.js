@@ -3,7 +3,7 @@ import store from '@/store'
 
 const BaseUrl = 'http://127.0.0.1:3000'
 
-export const addCourse = function(courseInfo) {
+export const addCourse = (courseInfo) => {
     return request({
         url: BaseUrl + '/addCourse',
         method: 'post',
@@ -11,7 +11,7 @@ export const addCourse = function(courseInfo) {
     })
 }
 
-export const adminDelCourse = function(courseNum) {
+export const adminDelCourse = (courseNum) => {
     return request({
         url: BaseUrl + '/adminDelCourse',
         method: 'post',
@@ -21,7 +21,7 @@ export const adminDelCourse = function(courseNum) {
     })
 }
 
-export const addStu = function(stuInfo) {
+export const addStu = (stuInfo) => {
     return request({
         url: BaseUrl + '/addStu',
         method: 'post',
@@ -29,7 +29,7 @@ export const addStu = function(stuInfo) {
     })
 }
 
-export const adminDownloadFile = function() {
+export const adminDownloadFile = () => {
 
 }
 

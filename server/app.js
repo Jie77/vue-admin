@@ -3,6 +3,8 @@ const koaBody = require('koa-body')
 const Route = require('koa-router')
 const cors = require('koa2-cors')
 const jwt = require('jsonwebtoken')
+const query = require('./db')
+const encrypt = require('./utils/encrypt')
 const Port = 3000
 
 const app = new Koa()
@@ -24,6 +26,21 @@ router.post('/login', (ctx, next)=>{
     ctx.body = {
         'token': token,
     } 
+})
+
+router.post('/reg', async (ctx, next) => {
+    
+    let userInfo = ctx.request.body,
+        userName = userInfo.user,
+        pwd = encrypt(userInfo.pwd)
+        console.log(userInfo)
+    try {
+        let data = await query('select * from course')
+        console.log(data)
+        ctx.body = data
+    } catch(e) {
+        console.log(e)
+    }
 })
 
 app
