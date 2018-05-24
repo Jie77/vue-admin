@@ -12,10 +12,28 @@ app.use(koaBody())
 app.use(cors({
     origin: '*'
   }))
-
+/**
+ * 注册和登陆处理模块
+ */
 router.post('/login', login)
-
 router.post('/reg', regist)
+
+/**
+ * 学生处理模块
+ */
+router.get('/getAllAllowCourse', getAllAllowCourse)
+router.get('/getHadSelectedCourse', getHadSelectedCourse)
+router.post('/selectCourse', selectCourse)
+router.post('/delCourse', delCourse)
+
+/**
+ * 管理员处理模块
+ */
+router.post('/addCourse', addCourse)
+router.post('/adminDelCourse', adminDelCourse)
+router.post('/addStu', addStu)
+
+
 
 app
   .use(router.routes())
