@@ -19,11 +19,21 @@ export default {
   },
   methods: {
     submit(){
-      console.log('hhh')
-      registByName(this.user, this.pwd).then(() => {
-        console.log("success")
+      registByName(this.user, this.pwd).then((res) => {
+        if (res.data.state) {
+          this.$message({
+            message: res.data.content,
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.$router.push('/login')
+          }, 1000)
+        } else {
+          this.$message.error(res.data.content)
+        }
       }).catch((error) => {
-        console.log('error' + error)
+        this.$message.error('注册发生错误')
+        // console.log('error' + error)
       })
     }
   }

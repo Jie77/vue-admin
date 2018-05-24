@@ -4,7 +4,7 @@ import { getToken, getRole } from '@/api/auth'
 
 
 router.beforeEach((to, from, next) => {
-    console.log('kkk')
+    // console.log('kkk')
     if (to.meta.auth) {
         if (getToken() && to.meta.role === getRole()) {
             next()

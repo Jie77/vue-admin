@@ -8,16 +8,18 @@ const pool = mysql.createPool({
     database: DB
 })
 
-const mysqlQuery = function(query) {
+const mysqlQuery = function(query, param) {
     return new Promise((resolve, reject) => {
         pool.getConnection(function(err, connection) {
             if (err) {
+                console.log('数据库连接错误')
                 reject(err)
             } else {
-                connection.query(query, function(error, results, fields) {
+                connection.query(query, param, function(error, results, fields) {
                     connection.release()
                     if (error) {
-                        reject(err)
+                        console.log('数据库操作错误')
+                        reject(new Error(error))
                     } else {
                         resolve(results)
                     }

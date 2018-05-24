@@ -32,27 +32,31 @@ const user = {
     },
     actions: {
         Login({ commit }, userInfo){
-            console.log('触发login')
+            // console.log('触发login')
             return new Promise((resolve, reject)=>{
                 loginByName(userInfo.user, userInfo.pwd).then(res => {
-                    let data = res.data,
-                        token = data.token,
-                        user = JSON.parse(base64url.decode(token.split('.')[1]))
-                    console.log(user)
-                    let permissionNav = nav.filter(element => {
-                        return element.role === user.role
-                    });
-                    commit('SET_TOKEN',token)
-                    commit('SET_NAME', user.userName)
-                    commit('SET_ROLE', user.role)
-                    commit('SET_NAV', permissionNav)
-                    saveToken(token)
-                    saveName(user.userName)
-                    saveRole(user.role)
-                    saveNav(permissionNav)
-                    resolve()
+                    let data = res.data
+                    if (data.state){
+                        let token = data.token,
+                            user = JSON.parse(base64url.decode(token.split('.')[1]))
+                        // console.log(user)
+                        let permissionNav = nav.filter(element => {
+                            return element.role === user.role
+                        });
+                        commit('SET_TOKEN',token)
+                        commit('SET_NAME', user.userName)
+                        commit('SET_ROLE', user.role)
+                        commit('SET_NAV', permissionNav)
+                        saveToken(token)
+                        saveName(user.userName)
+                        saveRole(user.role)
+                        saveNav(permissionNav)
+                        resolve(data.content)
+                    } else {
+                        reject(data.content)
+                    }
                 }).catch(error => {
-                    reject(error)
+                    reject('发生错误')
                 })
             })
         }
