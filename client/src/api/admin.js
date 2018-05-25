@@ -11,12 +11,12 @@ export const addCourse = (courseInfo) => {
     })
 }
 
-export const adminDelCourse = (courseNum) => {
+export const adminDelCourse = (cno) => {
     return request({
         url: BaseUrl + '/adminDelCourse',
         method: 'post',
         data: {
-            courseNum: courseNum
+            cno: cno
         }
     })
 }
@@ -26,6 +26,21 @@ export const addStu = (stuInfo) => {
         url: BaseUrl + '/addStu',
         method: 'post',
         data: stuInfo
+    })
+}
+
+export const getAllCourse = () => {
+    return request({
+        url: BaseUrl + '/getAllCourse',
+        method: 'get'
+    })
+}
+
+export const assignCourse = (courseInfo) => {
+    return request({
+        url: BaseUrl + '/assignCourse',
+        method: 'post',
+        data: courseInfo
     })
 }
 

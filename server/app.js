@@ -4,7 +4,7 @@ const Route = require('koa-router')
 const cors = require('koa2-cors')
 const { login, regist } = require('./api/login')
 const { getAllAllowCourse,  getHadSelectedCourse, selectCourse, delCourse } = require('./api/stu')
-const { addCourse, adminDelCourse, addStu } = require('./api/admin')
+const { addCourse, adminDelCourse, addStu, getAllCourse, assignCourse } = require('./api/admin')
 const Port = 3000
 
 const app = new Koa()
@@ -31,9 +31,11 @@ router.post('/delCourse', delCourse)
 /**
  * 管理员处理模块
  */
+router.get('/getAllCourse', getAllCourse)
 router.post('/addCourse', addCourse)
 router.post('/adminDelCourse', adminDelCourse)
 router.post('/addStu', addStu)
+router.post('/assignCourse', assignCourse)
 
 
 

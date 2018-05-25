@@ -11,7 +11,7 @@
                 <el-form-item label="班级" prop="classNum">
                     <el-input v-model="ruleForm.classNum"></el-input>
                 </el-form-item>
-                <el-form-item label="星期" prop="day">
+                <el-form-item label="星期" prop="day" >
                     <el-input v-model="ruleForm.day"></el-input>
                 </el-form-item>
                 <el-form-item label="第几节" prop="orderNum">
@@ -25,24 +25,24 @@
         </div>
         <div class="course-list">
             <div class="ac-title">
-                <h2>可分配课程</h2>
+                <h2>所有课程</h2>
             </div>
             <el-table
                 :data="courseList"
                 border
                 style="width: 100%">
                 <el-table-column
-                    prop="courseID"
+                    prop="cno"
                     label="课程号"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseName"
+                    prop="cname"
                     label="课程名"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseScore"
+                    prop="ccredit"
                     label="学分"
                     >
                 </el-table-column>
@@ -51,9 +51,31 @@
     </div>
 </template>
 <script>
-
+import { getAllCourse, assignCourse } from '@/api/admin'
 export default {
     data() {
+        let checkDay = (rule, value, callback) => {
+            if (!value) {
+                callback(new Error('请输入星期'))
+            }
+            if(value<=5 && value>=1) {
+                callback()
+            } else {
+                callback(new Error('请输入合法日期，例如星期一，请输入1'))
+            }
+        }
+        let checkOrderNum = (rule, value, callback) => {
+            if (!value) {
+                callback(new Error('请输入第几节'))
+            }
+            if(value<=4 && value>=1) {
+                callback()
+            } else {
+                callback(new Error('请输入合法节次，例如第一节，请输入1'))
+            }
+            
+        }
+
         return {
             ruleForm: {
                 cno: '',
@@ -69,39 +91,51 @@ export default {
                     { required: true, message: '请输入班号', trigger: 'blur' },
                 ],
                 day: [
-                    { required: true, message: '请输入星期', trigger: 'blur' },
+                    { required: true, validator: checkDay, trigger: 'blur' },
                 ],
                 orderNum: [
-                    { required: true, message: '请输入第几节', trigger: 'blur' },
+                    { required: true, validator: checkOrderNum, trigger: 'blur' },
                 ]
             },
-            courseList: [
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                }
-            ]
+            courseList: []
         }
     },
-    // created() {
-    //     getAllAllowCourse().then(courseList => {
-    //         // this.courseList = courseList
-    //     })
-    // },
+    created() {
+        getAllCourse().then(res => {
+            if (res.data.state){
+                this.courseList = res.data.courseList
+            } else {
+                this.$notify({
+                    title: '错误',
+                    message: '获取课程列表失败',
+                    duration: 0
+                });
+            }
+        }).catch(error => {
+            this.$notify({
+                title: '错误',
+                message: '请求获取发生错误',
+                duration: 0
+            });
+        })
+    },
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                this.$message({
-                    message: '选课成功',
-                    type: 'success'
+                assignCourse(this.ruleForm).then(res => {
+                    if (res.data.state){
+                        this.$message({
+                            message: res.data.content,
+                            type: 'success'
+                        })
+                    } else {
+                        this.$message.error(res.data.content)
+                    }
+                }).catch(error => {
+                    this.$message.error('请求发生错误')
                 })
+                
             } else {
                 this.$message.error('提交失败')
                 return false

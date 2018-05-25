@@ -5,28 +5,29 @@
                 <h2>删除课程</h2>
             </div>
             <el-table
-                :data="course"
+                :data="courseList"
                 border
                 style="width: 100%">
                 <el-table-column
-                    prop="courseID"
+                    prop="cno"
                     label="课程号"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseName"
+                    prop="cname"
                     label="课程名"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseScore"
+                    prop="ccredit"
                     label="学分"
                     >
                 </el-table-column>
                 <el-table-column
-                width="200"
-                label="删除"
-                align="center">
+                    width="200"
+                    label="删除"
+                    align="center"
+                    >
                 <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="danger" >删除</el-button>
                 </template>
@@ -36,62 +37,54 @@
     </div>
 </template>
 <script>
+import { getAllCourse, adminDelCourse } from '@/api/admin'
 export default {
     data () {
         return {
-            course: [
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                }
-            ]
+            courseList: []
         }
+    },
+    methods: {
+        handleClick(row) {
+            // console.log(row.cno)
+            adminDelCourse(row.cno).then(res => {
+                if (res.data.state) {
+                    this.$message({
+                        message: res.data.content,
+                        type: 'success'
+                    })
+                    this.refreshCourseList()
+                }
+            }).catch(error => {
+                this.$notify({
+                    title: '错误',
+                    message: '请求获取发生错误',
+                    duration: 0
+                });
+            })
+        }, 
+        refreshCourseList() {
+            getAllCourse().then(res => {
+                if (res.data.state){
+                    this.courseList = res.data.courseList
+                } else {
+                    this.$notify({
+                        title: '错误',
+                        message: '获取课程列表失败',
+                        duration: 0
+                    });
+                }
+            }).catch(error => {
+                this.$notify({
+                    title: '错误',
+                    message: '请求获取发生错误',
+                    duration: 0
+                });
+            })
+        }
+    },
+    created () {
+        this.refreshCourseList()
     }
 }
 </script>
