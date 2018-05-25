@@ -5,9 +5,6 @@
                 <h2>选课</h2>
             </div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
-                <el-form-item label="学号" prop="sno">
-                    <el-input v-model="ruleForm.sno"></el-input>
-                </el-form-item>
                 <el-form-item label="课程号" prop="cno">
                     <el-input v-model="ruleForm.cno"></el-input>
                 </el-form-item>
@@ -45,18 +42,14 @@
     </div>
 </template>
 <script>
-import { getAllAllowCourse } from '@/api/stu'
+import { getAllAllowCourse, selectCourse } from '@/api/stu'
 export default {
     data() {
         return {
             ruleForm: {
-                sno: '',
                 cno: ''
             },
             rules: {
-                sno: [
-                    { required: true, message: '请输入学号', trigger: 'blur' },
-                ],
                 cno: [
                     { required: true, message: '请输入课程号', trigger: 'blur' },
                 ]
@@ -83,15 +76,23 @@ export default {
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
-            if (valid) {
-                this.$message({
-                    message: '选课成功',
-                    type: 'success'
-                })
-            } else {
-                this.$message.error('提交失败')
-                return false
-            }
+                if (valid) {
+                    selectCourse(this.ruleForm.cno).then(res => {
+                        if (res.data.state) {
+                            this.$message({
+                                message: res.data.content,
+                                type: 'success'
+                            })
+                        } else {
+                            this.$message.error(res.data.content)
+                        }
+                    }).catch(error => {
+                        this.$message.error(res.data.content)
+                    })
+                } else {
+                    this.$message.error('提交失败')
+                    return false
+                }
             });
         },
         resetForm(formName) {

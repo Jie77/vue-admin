@@ -15,14 +15,14 @@ export const getAllAllowCourse = function() {
     })
 }
 
-export const selectCourse = function(courseNum) {
+export const selectCourse = function(cno) {
     let userName = getName()
     return request({
         url: BaseUrl + '/selectCourse',
         method: 'post',
         data: {
-            stuNum: userName,
-            courseNum: courseNum
+            sno: userName,
+            cno: cno
         }
     })
 }
