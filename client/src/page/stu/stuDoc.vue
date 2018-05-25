@@ -8,8 +8,7 @@
                 </span>
             </div>
             <el-table
-                :data="course"
-                
+                :data="courseList"
                 style="width: 100%">
                 <el-table-column
                     type="index">
@@ -44,40 +43,32 @@
     </div>
 </template>
 <script>
+import { getSchedule } from '@/api/stu'
+
 export default {
     data () {
         return {
-            course: [
-                {
-                    'Mon': '第一节课',
-                    'Tue': '第一节课',
-                    'Wed': '第一节课',
-                    'Thu': '第一节课',
-                    'Fri': '第一节课',
-                },
-                {
-                    'Mon': '第二节课',
-                    'Tue': '第二节课',
-                    'Wed': '第二节课',
-                    'Thu': '第二节课',
-                    'Fri': '第二节课',
-                },
-                {
-                    'Mon': '第三节课',
-                    'Tue': '第三节课',
-                    'Wed': '第三节课',
-                    'Thu': '第三节课',
-                    'Fri': '第三节课',
-                },
-                {
-                    'Mon': '第四节课',
-                    'Tue': '第四节课',
-                    'Wed': '第四节课',
-                    'Thu': '第四节课',
-                    'Fri': '第四节课',
-                }
-            ]
+            courseList: []
         }
+    },
+    created () {
+        getSchedule().then(res => {
+            if (res.data.state) {
+                this.courseList = res.data.content
+            } else {
+                this.$notify({
+                    title: '错误',
+                    message: res.data.content,
+                    duration: 0
+                });
+            }
+        }).catch(error => {
+            this.$notify({
+                title: '错误',
+                message: '课表获取错误',
+                duration: 0
+            });
+        })
     }
 }
 </script>

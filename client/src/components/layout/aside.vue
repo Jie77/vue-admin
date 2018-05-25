@@ -2,7 +2,7 @@
     <div class="aside-container">
         <el-col :span="24">
             <el-menu
-            default-active="/layout/studoc"
+            :default-active="hehe"
             class="el-menu-vertical-demo"
             router>
             <el-menu-item v-for="item in navList" :index="item.url" :key="item.name">
@@ -14,11 +14,18 @@
     </div>
 </template>
 <script>
-import { getNav } from '@/api/auth'
+import { getNav, getRole } from '@/api/auth'
 export default {
     computed: {
         navList() {
             return getNav()
+        },
+        hehe() {
+            if (getRole() === 'stu') {
+                return "/layout/selectcourse"
+            } else if (getRole() === 'admin') {
+                return '/layout/adminaddcourse'
+            }
         }
     }
 }

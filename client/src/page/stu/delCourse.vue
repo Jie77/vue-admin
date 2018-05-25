@@ -5,21 +5,21 @@
                 <h2>已选课程</h2>
             </div>
             <el-table
-                :data="course"
+                :data="courseList"
                 border
                 style="width: 100%">
                 <el-table-column
-                    prop="courseID"
+                    prop="cno"
                     label="课程号"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseName"
+                    prop="cname"
                     label="课程名"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseScore"
+                    prop="ccredit"
                     label="学分"
                     >
                 </el-table-column>
@@ -36,62 +36,51 @@
     </div>
 </template>
 <script>
+import { delCourse, getHadSelectedCourse } from '@/api/stu'
 export default {
     data () {
         return {
-            course: [
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                }
-            ]
+            courseList: []
         }
+    },
+    methods: {
+        handleClick(row) {
+            delCourse(row.cno).then(res => {
+                if (res.data.state) {
+                    this.$message({
+                        message: res.data.content,
+                        type: 'success'
+                    })
+                    this.getCourse()
+                } else {
+                    this.$message.error(res.data.content)
+                }
+            }).catch(error => {
+                this.$message.error("删除失败")
+            })
+        },
+        getCourse() {
+            getHadSelectedCourse().then(res => {
+                if (res.data.state) {
+                    this.courseList = res.data.content
+                } else {
+                    this.$notify({
+                        title: '错误',
+                        message: res.data.content,
+                        duration: 0
+                    });
+                }
+            }).catch(error => {
+                this.$notify({
+                    title: '错误',
+                    message: '课程列表获取错误',
+                    duration: 0
+                });
+            })
+        }
+    },
+    created () {
+        this.getCourse()
     }
 }
 </script>

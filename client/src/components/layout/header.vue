@@ -5,7 +5,7 @@
                 <i class="el-icon-setting el-icon--left"></i>{{ userName }}
             </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>退出登录</el-dropdown-item>
+                <el-dropdown-item>退出</el-dropdown-item>
             </el-dropdown-menu> 
         </el-dropdown>
     </div>

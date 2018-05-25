@@ -19,7 +19,7 @@ const stuNav = [
     },
     {
         url: '/layout/studoc',
-        name: '报表',
+        name: '课表',
         icon: 'el-icon-document',
         role: 'stu'
     },

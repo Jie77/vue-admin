@@ -23,17 +23,17 @@
                 border
                 style="width: 100%">
                 <el-table-column
-                    prop="courseID"
+                    prop="cno"
                     label="课程号"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseName"
+                    prop="cname"
                     label="课程名"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseScore"
+                    prop="ccredit"
                     label="学分"
                     >
                 </el-table-column>
@@ -54,26 +54,32 @@ export default {
                     { required: true, message: '请输入课程号', trigger: 'blur' },
                 ]
             },
-            courseList: [
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                }
-            ]
+            courseList: []
         }
     },
     created() {
-        getAllAllowCourse().then(courseList => {
-            // this.courseList = courseList
-        })
+        this.getCourse()
     },
     methods: {
+        getCourse() {
+            getAllAllowCourse().then(res => {
+                if (res.data.state) {
+                    this.courseList = res.data.content
+                } else {
+                    this.$notify({
+                        title: '错误',
+                        message: res.data.content,
+                        duration: 0
+                    });
+                }
+            }).catch(error => {
+                this.$notify({
+                    title: '错误',
+                    message: '课程列表获取错误',
+                    duration: 0
+                });
+            })
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -83,6 +89,7 @@ export default {
                                 message: res.data.content,
                                 type: 'success'
                             })
+                            this.getCourse()
                         } else {
                             this.$message.error(res.data.content)
                         }

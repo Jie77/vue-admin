@@ -28,7 +28,7 @@ export default {
           type: 'success'
         })
         if(this.$store.getters.role === 'stu'){
-          this.$router.push('/layout/studoc')
+          this.$router.push('/layout/selectcourse')
         }else if(this.$store.getters.role === 'admin'){
           this.$router.push('/layout/adminaddcourse')
         }
