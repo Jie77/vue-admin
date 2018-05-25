@@ -27,7 +27,7 @@
                     <el-input v-model="ruleForm.age"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">确认选课</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">确认添加</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
                 </el-form-item>
                 </el-form>
@@ -35,6 +35,7 @@
     </div>
 </template>
 <script>
+import { addStu } from '@/api/admin'
 export default {
     data() {
         return {
@@ -76,10 +77,21 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                alert('submit!');
+                addStu(this.ruleForm).then(res => {
+                    if (res.data.state){
+                        this.$message({
+                            message: res.data.content,
+                            type: 'success'
+                        })
+                    } else {
+                        this.$message.error(res.data.content)
+                    }
+                }).catch(error => {
+                    this.$message.error('添加失败')
+                })
             } else {
-                console.log('error submit!!');
-                return false;
+                this.$message.error('请按照格式添加')
+                return false
             }
             });
         },

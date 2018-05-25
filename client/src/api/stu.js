@@ -1,20 +1,22 @@
 import request from '@/utils/request'
 import store from '@/store'
+import { getName } from './auth'
 
 const BaseUrl = 'http://127.0.0.1:3000'
-const userName = store.getters.userName
 
 export const getAllAllowCourse = function() {
+    let userName = getName(),
+        params = new URLSearchParams()
+    params.append('stuNum', userName)
     return request({
         url: BaseUrl + '/getAllAllowCourse',
         method: 'get',
-        params: {
-            stuNum: userName
-        }
+        params: params
     })
 }
 
 export const selectCourse = function(courseNum) {
+    let userName = getName()
     return request({
         url: BaseUrl + '/selectCourse',
         method: 'post',
@@ -26,6 +28,7 @@ export const selectCourse = function(courseNum) {
 }
 
 export const getHadSelectedCourse = function() {
+    let userName = getName()
     return request({
         url: BaseUrl + '/getHadSelectedCourse',
         method: 'get',
@@ -36,6 +39,7 @@ export const getHadSelectedCourse = function() {
 }
 
 export const delCourse = function(courseNum) {
+    let userName = getName()
     return request({
         url: BaseUrl + '/delCourse',
         method: 'post',

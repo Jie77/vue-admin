@@ -4,7 +4,7 @@ import LayOut from '@/components/layout/layout'
 import Login from '@/page/login'
 import Register from '@/page/register'
 import NotFound from '@/page/notFound'
-import AddCourse from '@/page/stu/addCourse'
+import SelectCourse from '@/page/stu/selectCourse'
 import DelCourse from '@/page/stu/delCourse'
 import DownloadDoc from '@/page/stu/downloadDoc'
 import StuDoc from '@/page/stu/stuDoc'
@@ -12,6 +12,7 @@ import adminAddCourse from '@/page/admin/addCourse'
 import adminDelCourse from '@/page/admin/delCourse'
 import adminDownloadDoc from '@/page/admin/downloadDoc'
 import adminAddStu from '@/page/admin/addstu'
+import adminAssignCourse from '@/page/admin/assignCourse.vue'
 
 Vue.use(Router)
 
@@ -41,9 +42,9 @@ const router = new Router({
       },
       children: [
         {
-          path: 'addcourse',
-          name: 'addcourse',
-          component: AddCourse,
+          path: 'selectcourse',
+          name: 'selectcourse',
+          component: SelectCourse,
           meta: { 
             auth: true,
             role: 'stu'
@@ -80,6 +81,15 @@ const router = new Router({
           path: 'adminaddcourse',
           name: 'adminaddcourse',
           component: adminAddCourse,
+          meta: { 
+            auth: true,
+            role: 'admin'
+          }
+        },
+        {
+          path: 'adminassigncourse',
+          name: 'adminassigncourse',
+          component: adminAssignCourse,
           meta: { 
             auth: true,
             role: 'admin'

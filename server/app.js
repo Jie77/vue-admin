@@ -3,6 +3,8 @@ const koaBody = require('koa-body')
 const Route = require('koa-router')
 const cors = require('koa2-cors')
 const { login, regist } = require('./api/login')
+const { getAllAllowCourse,  getHadSelectedCourse, selectCourse, delCourse } = require('./api/stu')
+const { addCourse, adminDelCourse, addStu } = require('./api/admin')
 const Port = 3000
 
 const app = new Koa()

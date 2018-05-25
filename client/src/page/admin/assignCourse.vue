@@ -1,28 +1,34 @@
 <template>
-    <div class="ac-container">
+    <div class="assignc-container">
         <div class="add-course">
             <div class="ac-title">
-                <h2>选课</h2>
+                <h2>分配课程</h2>
             </div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
-                <el-form-item label="学号" prop="sno">
-                    <el-input v-model="ruleForm.sno"></el-input>
-                </el-form-item>
                 <el-form-item label="课程号" prop="cno">
                     <el-input v-model="ruleForm.cno"></el-input>
                 </el-form-item>
+                <el-form-item label="班级" prop="classNum">
+                    <el-input v-model="ruleForm.classNum"></el-input>
+                </el-form-item>
+                <el-form-item label="星期" prop="day">
+                    <el-input v-model="ruleForm.day"></el-input>
+                </el-form-item>
+                <el-form-item label="第几节" prop="orderNum">
+                    <el-input v-model="ruleForm.orderNum"></el-input>
+                </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">确认选课</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">确认分配</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
                 </el-form-item>
-                </el-form>
+            </el-form>
         </div>
         <div class="course-list">
             <div class="ac-title">
-                <h2>可选课程</h2>
+                <h2>可分配课程</h2>
             </div>
             <el-table
-                :data="course"
+                :data="courseList"
                 border
                 style="width: 100%">
                 <el-table-column
@@ -45,62 +51,31 @@
     </div>
 </template>
 <script>
+
 export default {
     data() {
         return {
             ruleForm: {
-                sno: '',
-                cno: ''
+                cno: '',
+                classNum: '',
+                day: '',
+                orderNum: ''
             },
             rules: {
-                sno: [
-                    { required: true, message: '请输入学号', trigger: 'blur' },
-                ],
                 cno: [
                     { required: true, message: '请输入课程号', trigger: 'blur' },
+                ],
+                classNum: [
+                    { required: true, message: '请输入班号', trigger: 'blur' },
+                ],
+                day: [
+                    { required: true, message: '请输入星期', trigger: 'blur' },
+                ],
+                orderNum: [
+                    { required: true, message: '请输入第几节', trigger: 'blur' },
                 ]
             },
-            course: [
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
+            courseList: [
                 {
                     courseID: 'CH0001',
                     courseName: '课程一',
@@ -114,14 +89,22 @@ export default {
             ]
         }
     },
+    // created() {
+    //     getAllAllowCourse().then(courseList => {
+    //         // this.courseList = courseList
+    //     })
+    // },
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                alert('submit!');
+                this.$message({
+                    message: '选课成功',
+                    type: 'success'
+                })
             } else {
-                console.log('error submit!!');
-                return false;
+                this.$message.error('提交失败')
+                return false
             }
             });
         },
@@ -139,7 +122,7 @@ export default {
     width: 100%;
     background: #fff;
 }
-.ac-container {
+.assignc-container {
     width: 100%;
     .ac-title {
         padding-bottom: 30px;

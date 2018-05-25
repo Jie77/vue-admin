@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken')
 const query = require('../db')
 const encrypt = require('../utils/encrypt')
-
+/**
+ * 根据用户名和密码查询是否存在该用户
+ * 若存在，返回token和用户角色
+ */
 const login = async (ctx, next) => {
     let userInfo = ctx.request.body,
         pwd = encrypt(userInfo.pwd)
@@ -37,29 +40,40 @@ const login = async (ctx, next) => {
     }
 }
 
+/**
+ * 1.查询是否有该学生信息
+ * 2.查询该学生是否已注册账号
+ * 有学生信息且未注册，再注册账号
+ */
 const regist = async (ctx, next) => {
     let userInfo = ctx.request.body,
         userName = userInfo.user,
         pwd = encrypt(userInfo.pwd)
         // console.log(userInfo)
     try {
-        let user = await query('select * from login where sno=?', [userName])
-        // console.log(user.length)
-        if (user.length === 0){
-            let data = await query('insert into login values(?, ?, ?)', [userName, pwd, 'stu'])
-            // console.log(data)
-            ctx.body = {
-                state: true,
-                content: '注册成功'
+        let stu = await query('select * from student where sno=?', [userName])
+        if (stu.length != 0){
+            let user = await query('select * from login where sno=?', [userName])
+            // console.log(user.length)
+            if (user.length === 0){
+                let data = await query('insert into login values(?, ?, ?)', [userName, pwd, 'stu'])
+                // console.log(data)
+                ctx.body = {
+                    state: true,
+                    content: '注册成功'
+                }
+            } else {
+                ctx.body = {
+                    state: false,
+                    content: '用户名已注册'
+                }
             }
         } else {
             ctx.body = {
                 state: false,
-                content: '用户名已注册'
+                content: '暂无该学号信息'
             }
-            
         }
-        
     } catch(e) {
         console.log('数据库操作错误')
         ctx.body = {

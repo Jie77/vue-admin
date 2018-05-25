@@ -1,18 +1,15 @@
 <template>
-    <div class="admin-ac-container">
+    <div class="ac-container">
         <div class="add-course">
             <div class="ac-title">
-                <h2>添加课程</h2>
+                <h2>选课</h2>
             </div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
-                <el-form-item label="课程名" prop="cname">
-                    <el-input v-model="ruleForm.cname"></el-input>
+                <el-form-item label="学号" prop="sno">
+                    <el-input v-model="ruleForm.sno"></el-input>
                 </el-form-item>
                 <el-form-item label="课程号" prop="cno">
                     <el-input v-model="ruleForm.cno"></el-input>
-                </el-form-item>
-                <el-form-item label="学分" prop="credit">
-                    <el-input v-model="ruleForm.credit"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确认选课</el-button>
@@ -20,49 +17,79 @@
                 </el-form-item>
                 </el-form>
         </div>
+        <div class="course-list">
+            <div class="ac-title">
+                <h2>可选课程</h2>
+            </div>
+            <el-table
+                :data="courseList"
+                border
+                style="width: 100%">
+                <el-table-column
+                    prop="courseID"
+                    label="课程号"
+                    >
+                </el-table-column>
+                <el-table-column
+                    prop="courseName"
+                    label="课程名"
+                    >
+                </el-table-column>
+                <el-table-column
+                    prop="courseScore"
+                    label="学分"
+                    >
+                </el-table-column>
+            </el-table>
+        </div>
     </div>
 </template>
 <script>
-import { addCourse } from '@/api/admin'
+import { getAllAllowCourse } from '@/api/stu'
 export default {
     data() {
         return {
             ruleForm: {
-                cname: '',
-                cno: '',
-                credit: ''
+                sno: '',
+                cno: ''
             },
             rules: {
-                cname: [
-                    { required: true, message: '请输入课程名', trigger: 'blur' },
+                sno: [
+                    { required: true, message: '请输入学号', trigger: 'blur' },
                 ],
                 cno: [
                     { required: true, message: '请输入课程号', trigger: 'blur' },
-                ],
-                credit: [
-                    { required: true, message: '请输入学分', trigger: 'blur' },
                 ]
-            }
+            },
+            courseList: [
+                {
+                    courseID: 'CH0001',
+                    courseName: '课程一',
+                    courseScore: '10'
+                },
+                {
+                    courseID: 'CH0001',
+                    courseName: '课程一',
+                    courseScore: '10'
+                }
+            ]
         }
+    },
+    created() {
+        getAllAllowCourse().then(courseList => {
+            // this.courseList = courseList
+        })
     },
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                addCourse(this.ruleForm).then(res => {
-                    if (res.data.state){
-                        this.$message({
-                            message: res.data.content,
-                            type: 'success'
-                        })
-                    } else {
-                        this.$message.error(res.data.content)
-                    }
-                }).catch(error => {
-                    this.$message.error('添加失败')
+                this.$message({
+                    message: '选课成功',
+                    type: 'success'
                 })
             } else {
-                this.$message.error('请按照格式添加')
+                this.$message.error('提交失败')
                 return false
             }
             });
@@ -81,7 +108,7 @@ export default {
     width: 100%;
     background: #fff;
 }
-.admin-ac-container {
+.ac-container {
     width: 100%;
     .ac-title {
         padding-bottom: 30px;
@@ -100,6 +127,9 @@ export default {
         .el-input {
             width: 300px;
         }
+    }
+    .course-list {
+        @include box-base;
     }
 }
 </style>

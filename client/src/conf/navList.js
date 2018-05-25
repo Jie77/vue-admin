@@ -1,6 +1,6 @@
 const stuNav = [
     {
-        url: '/layout/addcourse',
+        url: '/layout/selectcourse',
         name: '添加课程',
         icon: 'el-icon-circle-plus-outline',
         role: 'stu'
@@ -27,6 +27,12 @@ const stuNav = [
         url: '/layout/adminaddcourse',
         name: '添加课程',
         icon: 'el-icon-circle-plus-outline',
+        role: 'admin'
+    },
+    {
+        url: '/layout/adminassigncourse',
+        name: '分配课程',
+        icon: 'el-icon-edit-outline',
         role: 'admin'
     },
     {
