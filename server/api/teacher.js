@@ -2,8 +2,14 @@ const query = require('../db')
 const encrypt = require('../utils/encrypt')
 const path = require('path')
 const fs = require('fs')
+const permission = require('../utils/permission')
 
 const giveScore = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let scoreInfo = ctx.request.body
     try {
         await query('update sc set grade=? where cno=? and sno=?', [scoreInfo.grade, scoreInfo.cno, scoreInfo.sno])
@@ -19,6 +25,11 @@ const giveScore = async (ctx, next) => {
     }
 }
 const getStu = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let tno = ctx.request.query.tno
     try {
         let stuList = await query('select student.sno, student.sname, sc.grade, ct.cno from student, sc, ct where ct.tno=? and ct.cno=sc.cno and sc.sno=student.sno', [tno])
@@ -37,6 +48,11 @@ const getStu = async (ctx, next) => {
 
 
 const uploadFile = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let file = ctx.request.body.files.file,
         cno = ctx.request.body.fields.cno,
         fname = file.name,
@@ -61,6 +77,11 @@ const uploadFile = async (ctx, next) => {
 }
 
 const getTeachCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let tno = ctx.request.query.tno
     try {
         let courseList = await query('select cno from ct where tno=?', [tno])

@@ -1,6 +1,12 @@
 const query = require('../db')
+const permission = require('../utils/permission')
 
 const getAllAllowCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let sno = ctx.request.query.sno
     console.log(sno)
     try {
@@ -17,6 +23,11 @@ const getAllAllowCourse = async (ctx, next) => {
     }
 }
 const getHadSelectedCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let sno = ctx.request.query.sno
     try {
         let courseList = await query('select course.cname, course.cno, course.ccredit from sc, course where sc.sno=? and sc.cno=course.cno', [sno])
@@ -32,6 +43,11 @@ const getHadSelectedCourse = async (ctx, next) => {
     }
 }
 const selectCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let scInfo = ctx.request.body
     try {
         let isSelect = await query('select * from sc where sno=? and cno=?', [scInfo.sno, scInfo.cno])
@@ -55,6 +71,11 @@ const selectCourse = async (ctx, next) => {
     }
 }
 const delCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let scInfo = ctx.request.body
     try {
         await query('delete from sc where sno=? and cno=?', [scInfo.sno, scInfo.cno])
@@ -71,6 +92,11 @@ const delCourse = async (ctx, next) => {
 }
 
 const getSchedule = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let sno = ctx.request.query.sno
     try {
         let list = await query('select course.cname, cc.day, cc.orderNum from cc, sc, student, course where sc.sno = ? and sc.sno=student.sno and student.sclass=cc.class and sc.cno=cc.cno and course.cno=sc.cno', [sno])
@@ -125,6 +151,11 @@ const getSchedule = async (ctx, next) => {
     }
 }
 const getFile = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let sno = ctx.request.query.sno
     try {
         let fileList = await query('select cfile.cno, cfile.fpath, cfile.fname from cfile, sc where sc.sno=? and sc.cno = cfile.cno', [sno])

@@ -1,9 +1,14 @@
 const query = require('../db')
-
+const permission = require('../utils/permission')
 /**
  * 查询课程是否存在，不存在再添加
  */
 const addCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let courseInfo = ctx.request.body
     try {
         let course = await query('select * from course where cno=?', [courseInfo.cno])
@@ -30,6 +35,11 @@ const addCourse = async (ctx, next) => {
 
 const getAllCourse = async (ctx, next) => {
     try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
+    try {
         let courseList = await query('select * from course')
         ctx.body = {
             state: true,
@@ -44,6 +54,11 @@ const getAllCourse = async (ctx, next) => {
 }
 
 const adminDelCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let cno = ctx.request.body.cno
     try {
         await query('delete from course where cno=?', [cno])
@@ -63,6 +78,11 @@ const adminDelCourse = async (ctx, next) => {
  * 查询该学生是否存在，不存在再添加
  */
 const addStu = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let stuInfo = ctx.request.body
     try {
         let stu = await query('select * from student where sno=?', [stuInfo.sno])
@@ -95,6 +115,11 @@ const addStu = async (ctx, next) => {
  */
 
 const assignCourse = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let courseInfo = ctx.request.body
     try {
         let isClass = await query('select * from colleges where class=?', [courseInfo.classNum])
@@ -143,6 +168,11 @@ const assignCourse = async (ctx, next) => {
 }
 
 const getAllStu = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     let scollege = ctx.request.query.scollege
     console.log(scollege)
     try {
@@ -167,6 +197,11 @@ const getAllStu = async (ctx, next) => {
 }
 
 const getCollegeList = async (ctx, next) => {
+    try {
+        let auth = await permission(ctx)
+    } catch(e) {
+        ctx.throw(401, 'No Authorization')
+    }
     try {
         let collegeList = await query('select college from colleges group by college')
         let list = []
