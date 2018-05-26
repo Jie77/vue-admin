@@ -60,12 +60,14 @@ export default {
                 param.append('cno',this.value)
                 param.append('file',this.file[0])
                 uploadFile(param).then(res => {
-                    
+                    if (res.data.state) {
+                        this.$message.success(res.data.content)
+                    } else {
+                        this.$message.error(res.data.content)
+                    }
                 }).catch(error => {
-
+                    this.$message.error('上传失败')
                 })
-
-                this.$message.success('成功')
             }
         },
         selectFile($event) {

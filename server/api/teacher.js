@@ -35,22 +35,31 @@ const getStu = async (ctx, next) => {
     }
 }
 
-/**
- * param.append('cno',this.value)
- * param.append('file',this.file[0])
- */
 
 const uploadFile = async (ctx, next) => {
-    let file = ctx.request.body.files.file
-    // let filePath = path.join(__dirname, 'public', 'kejian', `${file.name}`)
-    let filePath = path.resolve('./', 'public', 'kejian', `${file.name}`)
-    console.log(filePath)
-    console.log(file.path)
-    let reader = fs.createReadStream(file.path)
-    let writer = fs.createWriteStream(filePath)
+    let file = ctx.request.body.files.file,
+        cno = ctx.request.body.fields.cno,
+        fname = file.name,
+        fileName = encrypt(Date.now().toString()) + fname.slice(fname.indexOf('.')),
+        filePath = path.resolve('./', 'public', 'kejian', fileName ),
+        reader = fs.createReadStream(file.path),
+        writer = fs.createWriteStream(filePath)
     reader.pipe(writer)
-    ctx.body = 'jj'
+    let fpath = 'http://127.0.0.1:3000/kejian/' + fileName
+    try {
+        await query('insert into cfile values(?, ?, ?)', [cno, fpath, fname])
+        ctx.body = {
+            state: true,
+            content: '上传成功'
+        }
+    } catch(e) {
+        ctx.body = {
+            state: false,
+            content: '数据库错误'
+        }
+    }
 }
+
 const getTeachCourse = async (ctx, next) => {
     let tno = ctx.request.query.tno
     try {

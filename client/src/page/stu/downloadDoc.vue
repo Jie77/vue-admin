@@ -5,22 +5,17 @@
                 <h2>课件下载</h2>
             </div>
             <el-table
-                :data="course"
+                :data="fileList"
                 border
                 style="width: 100%">
                 <el-table-column
-                    prop="courseID"
+                    prop="cno"
                     label="课程号"
                     >
                 </el-table-column>
                 <el-table-column
-                    prop="courseName"
-                    label="课程名"
-                    >
-                </el-table-column>
-                <el-table-column
-                    prop="courseScore"
-                    label="学分"
+                    prop="fname"
+                    label="课件名"
                     >
                 </el-table-column>
                 <el-table-column
@@ -28,7 +23,9 @@
                 label="下载"
                 align="center">
                 <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="primary" >下载</el-button>
+                    <a :href="scope.row.fpath" :download="scope.row.fname">
+                        <el-button type="primary">下载</el-button>
+                    </a>
                 </template>
                 </el-table-column>
             </el-table>
@@ -36,62 +33,32 @@
     </div>
 </template>
 <script>
+import { getFile } from '@/api/stu'
+
 export default {
     data () {
         return {
-            course: [
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                },
-                {
-                    courseID: 'CH0001',
-                    courseName: '课程一',
-                    courseScore: '10'
-                }
-            ]
+            fileList: []
         }
+    },
+    created () {
+        getFile().then(res => {
+            if (res.data.state) {
+                this.fileList = res.data.content
+            } else {
+                this.$notify({
+                    title: '错误',
+                    message: res.data.content,
+                    duration: 0
+                });
+            }
+        }).catch(error => {
+            this.$notify({
+                title: '错误',
+                message: '课件列表获取错误',
+                duration: 0
+            });
+        })
     }
 }
 </script>

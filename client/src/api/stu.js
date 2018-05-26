@@ -61,8 +61,15 @@ export const getSchedule = () => {
     })
 }
 
-export const downloadFile = () => {
-
+export const getFile = () => {
+    let sno = getName()
+    return request({
+        url: BaseUrl + '/getFile',
+        method: 'get',
+        params: {
+            sno: sno
+        }
+    })
 }
 
 

@@ -1,19 +1,5 @@
 const query = require('../db')
-/**
- * 返回格式
- * [
-        {
-            courseID: 'CH0001',
-            courseName: '课程一',
-            courseScore: '10'
-        },
-        {
-            courseID: 'CH0001',
-            courseName: '课程一',
-            courseScore: '10'
-        }
-    ]
- */
+
 const getAllAllowCourse = async (ctx, next) => {
     let sno = ctx.request.query.sno
     console.log(sno)
@@ -138,11 +124,28 @@ const getSchedule = async (ctx, next) => {
         }
     }
 }
+const getFile = async (ctx, next) => {
+    let sno = ctx.request.query.sno
+    try {
+        let fileList = await query('select cfile.cno, cfile.fpath, cfile.fname from cfile, sc where sc.sno=? and sc.cno = cfile.cno', [sno])
+        ctx.body = {
+            state: true,
+            content: fileList
+        }
+    } catch(e) {
+        ctx.body = {
+            state: false,
+            content: "数据库错误"
+        }
+    }
+}
+
 
 exports.getAllAllowCourse = getAllAllowCourse
 exports.getHadSelectedCourse = getHadSelectedCourse
 exports.selectCourse = selectCourse
 exports.delCourse = delCourse
 exports.getSchedule = getSchedule
+exports.getFile = getFile
 
 
