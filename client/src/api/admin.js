@@ -44,8 +44,21 @@ export const assignCourse = (courseInfo) => {
     })
 }
 
-export const adminDownloadFile = () => {
+export const getAllStu = (scollege) => {
+    return request({
+        url: BaseUrl + '/getAllStu',
+        method: 'get',
+        params: {
+            scollege: scollege
+        }
+    })
+}
 
+export const getCollegeList = () => {
+    return request({
+        url: BaseUrl + '/getCollegeList',
+        method: 'get'
+    })
 }
 
 

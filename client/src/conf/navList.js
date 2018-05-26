@@ -49,7 +49,7 @@ const stuNav = [
     },
     {
         url: '/layout/admindownloaddoc',
-        name: '报表',
+        name: '学生列表',
         icon: 'el-icon-document',
         role: 'admin'
     }

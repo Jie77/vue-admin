@@ -4,9 +4,10 @@
             <div class="title">
                 <h2>课表</h2>
                 <span class="btn">
-                    <el-button type="primary" icon="el-icon-printer">下载</el-button>
+                    <el-button type="primary" icon="el-icon-printer" @click="print">下载</el-button>
                 </span>
             </div>
+            <div class="printstart"></div>
             <el-table
                 :data="courseList"
                 style="width: 100%">
@@ -39,6 +40,7 @@
                     >
                 </el-table-column>
             </el-table>
+            <div class="printend"></div>
         </div>
     </div>
 </template>
@@ -49,6 +51,19 @@ export default {
     data () {
         return {
             courseList: []
+        }
+    },
+    methods: {
+        print() {
+            let bdhtml=document.body.innerHTML,
+                sprnstr='<div class="printstart"></div>',
+                eprnstr='<div class="printend"></div>',
+                prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr))
+            prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr))
+            window.document.body.innerHTML=prnhtml
+            window.print()
+            window.document.body.innerHTML=bdhtml
+            location.reload()
         }
     },
     created () {

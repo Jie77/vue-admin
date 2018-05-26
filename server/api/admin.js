@@ -133,9 +133,7 @@ const assignCourse = async (ctx, next) => {
                 state: false,
                 content: '该班级不存在'
             }
-        }
-
-        
+        }  
     } catch(e) {
         ctx.body = {
             state: false,
@@ -144,8 +142,57 @@ const assignCourse = async (ctx, next) => {
     }
 }
 
+const getAllStu = async (ctx, next) => {
+    let scollege = ctx.request.query.scollege
+    console.log(scollege)
+    try {
+        let stuList = await query('select sno, sname, ssdept from student where scollege = ?', [scollege])
+        if (stuList.length === 0) {
+            ctx.body = {
+                state: false,
+                content: '暂无该学院学生信息'
+            }
+        } else {
+            ctx.body = {
+                state: true,
+                content: stuList
+            }
+        }
+    } catch(e) {
+        ctx.body = {
+            state: false,
+            content: '数据库错误'
+        }
+    }
+}
+
+const getCollegeList = async (ctx, next) => {
+    try {
+        let collegeList = await query('select college from colleges group by college')
+        let list = []
+        for (item of collegeList) {
+            list.push({
+                value: item.college,
+                label: item.college
+            })
+        }
+        ctx.body = {
+            state: true,
+            content: list
+        }
+    } catch(e) {
+        ctx.body = {
+            state: false,
+            content: '数据库错误'
+        }
+    }
+}
+
+
 exports.addCourse = addCourse
 exports.adminDelCourse = adminDelCourse
 exports.addStu = addStu
 exports.getAllCourse = getAllCourse
 exports.assignCourse = assignCourse
+exports.getAllStu = getAllStu
+exports.getCollegeList = getCollegeList
