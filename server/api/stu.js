@@ -30,7 +30,7 @@ const getHadSelectedCourse = async (ctx, next) => {
     }
     let sno = ctx.request.query.sno
     try {
-        let courseList = await query('select course.cname, course.cno, course.ccredit from sc, course where sc.sno=? and sc.cno=course.cno', [sno])
+        let courseList = await query('select course.cname, course.cno, course.ccredit, sc.grade from sc, course where sc.sno=? and sc.cno=course.cno', [sno])
             ctx.body = {
                 state: true,
                 content: courseList

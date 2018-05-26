@@ -24,6 +24,11 @@
                     >
                 </el-table-column>
                 <el-table-column
+                    prop="grade"
+                    label="成绩"
+                    >
+                </el-table-column>
+                <el-table-column
                 width="200"
                 label="删除"
                 align="center">
