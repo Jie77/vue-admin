@@ -5,12 +5,13 @@ const cors = require('koa2-cors')
 const { login, regist } = require('./api/login')
 const { getAllAllowCourse,  getHadSelectedCourse, selectCourse, delCourse, getSchedule } = require('./api/stu')
 const { addCourse, adminDelCourse, addStu, getAllCourse, assignCourse, getAllStu, getCollegeList} = require('./api/admin')
-const { giveScore, getStu } = require('./api/teacher')
+const { giveScore, getStu, uploadFile, getTeachCourse } = require('./api/teacher')
 const Port = 3000
 
 const app = new Koa()
 const router = new Route()
 
+app.use(require('koa-static')(__dirname + '/public'))
 app.use(koaBody())
 app.use(cors({
     origin: '*'
@@ -45,7 +46,9 @@ router.post('/assignCourse', assignCourse)
  * 教师处理模块
  */
 router.get('/getStu', getStu)
+router.get('/getTeachCourse', getTeachCourse)
 router.post('/giveScore', giveScore)
+router.post('/uploadFile', koaBody({ multipart: true }), uploadFile)
 
 
 app

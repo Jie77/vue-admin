@@ -22,3 +22,22 @@ export const getStu = () => {
         }
     })
 }
+
+export const getTeachCourse = () => {
+    let tno = getName()
+    return request({
+        url: BaseUrl + '/getTeachCourse',
+        method: 'get',
+        params: {
+            tno: tno
+        }
+    })
+}
+
+export const uploadFile = (form) => {
+    return request({
+        url: BaseUrl + '/uploadFile',
+        method: 'post',
+        data: form
+    })
+}

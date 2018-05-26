@@ -15,6 +15,7 @@ import adminAddStu from '@/page/admin/addstu'
 import adminAssignCourse from '@/page/admin/assignCourse'
 import Grade from '@/page/teacher/grade'
 import StuInfo from '@/page/teacher/stuInfo'
+import UploadFile from '@/page/teacher/uploadFile'
 
 Vue.use(Router)
 
@@ -142,6 +143,15 @@ const router = new Router({
             role: 'teacher'
           }
         },
+        {
+          path: 'uploadfile',
+          name: 'uploadfile',
+          component: UploadFile,
+          meta: { 
+            auth: true,
+            role: 'teacher'
+          }
+        }
       ]
     },
     {

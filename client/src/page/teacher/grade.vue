@@ -18,7 +18,7 @@
                     <el-button type="primary" @click="submitForm('ruleForm')">确认录入</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
                 </el-form-item>
-                </el-form>
+            </el-form>
         </div>
         <div class="course-list">
             <div class="ac-title">

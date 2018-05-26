@@ -64,6 +64,12 @@ const stuNav = [
         name: '学生列表',
         icon: 'el-icon-document',
         role: 'teacher'
+    },
+    {
+        url: '/layout/uploadfile',
+        name: '课件上传',
+        icon: 'el-icon-upload2',
+        role: 'teacher'
     }
 ]
 
