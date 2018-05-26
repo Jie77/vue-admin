@@ -52,6 +52,18 @@ const stuNav = [
         name: '学生列表',
         icon: 'el-icon-document',
         role: 'admin'
+    },
+    {
+        url: '/layout/grade',
+        name: '成绩录入',
+        icon: 'el-icon-edit',
+        role: 'teacher'
+    },
+    {
+        url: '/layout/stuinfo',
+        name: '学生列表',
+        icon: 'el-icon-document',
+        role: 'teacher'
     }
 ]
 

@@ -12,10 +12,11 @@ export const loginByName = (user, pwd) => {
     })
 }
 
-export const registByName = (user, pwd) => {
+export const registByName = (user, pwd, role) => {
     let param = {
         user: user,
-        pwd: pwd
+        pwd: pwd,
+        role: role
     }
     return request({
         url: 'http://127.0.0.1:3000/reg',

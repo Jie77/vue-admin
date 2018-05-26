@@ -48,15 +48,21 @@ const login = async (ctx, next) => {
 const regist = async (ctx, next) => {
     let userInfo = ctx.request.body,
         userName = userInfo.user,
-        pwd = encrypt(userInfo.pwd)
+        pwd = encrypt(userInfo.pwd),
+        role = userInfo.role
         // console.log(userInfo)
     try {
-        let stu = await query('select * from student where sno=?', [userName])
-        if (stu.length != 0){
+        let userlist = null
+        if (role === 'stu') {
+            userlist = await query('select * from student where sno=?', [userName])
+        } else {
+            userlist = await query('select * from teacher where tno=?', [userName])
+        }
+        if (userlist.length != 0){
             let user = await query('select * from login where sno=?', [userName])
             // console.log(user.length)
             if (user.length === 0){
-                let data = await query('insert into login values(?, ?, ?)', [userName, pwd, 'stu'])
+                let data = await query('insert into login values(?, ?, ?)', [userName, pwd, role])
                 // console.log(data)
                 ctx.body = {
                     state: true,
@@ -71,7 +77,7 @@ const regist = async (ctx, next) => {
         } else {
             ctx.body = {
                 state: false,
-                content: '暂无该学号信息'
+                content: '暂无该用户信息'
             }
         }
     } catch(e) {

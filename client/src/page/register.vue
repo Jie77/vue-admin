@@ -4,7 +4,8 @@
     <el-input class="login-input" v-model="user" placeholder="请输入用户名"></el-input>
     <el-input class="login-input" v-model="pwd" placeholder="请输入密码" type="password"></el-input>
     <div class="btn-box">
-      <el-button type="primary" class="login-btn" @click="submit">注册</el-button>
+      <el-button type="primary" class="login-btn" @click="submit('stu')">学生注册</el-button>
+      <el-button type="primary" class="login-btn" @click="submit('teacher')">教师注册</el-button>
     </div>
   </div>
 </template>
@@ -18,23 +19,29 @@ export default {
     }
   },
   methods: {
-    submit(){
-      registByName(this.user, this.pwd).then((res) => {
-        if (res.data.state) {
-          this.$message({
-            message: res.data.content,
-            type: 'success'
-          })
-          setTimeout(() => {
-            this.$router.push('/login')
-          }, 1000)
-        } else {
-          this.$message.error(res.data.content)
-        }
-      }).catch((error) => {
-        this.$message.error('注册发生错误')
-        // console.log('error' + error)
-      })
+    submit(role){
+      if (this.user != '' && this.pwd != '') {
+        registByName(this.user, this.pwd, role).then((res) => {
+          if (res.data.state) {
+            this.$message({
+              message: res.data.content,
+              type: 'success'
+            })
+            setTimeout(() => {
+              this.$router.push('/login')
+            }, 1000)
+          } else {
+            this.$message.error(res.data.content)
+          }
+        }).catch((error) => {
+          this.$message.error('注册发生错误')
+          // console.log('error' + error)
+        })
+      } else if (this.user === '') {
+        this.$message.error('请输入用户名')
+      } else if (this.pwd === '') {
+        this.$message.error('请输入密码')
+      }
     }
   }
 }

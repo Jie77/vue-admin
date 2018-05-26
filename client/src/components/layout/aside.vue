@@ -25,6 +25,8 @@ export default {
                 return "/layout/selectcourse"
             } else if (getRole() === 'admin') {
                 return '/layout/adminaddcourse'
+            } else if (getRole() === 'teacher') {
+                return '/layout/grade'
             }
         }
     }

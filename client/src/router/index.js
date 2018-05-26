@@ -12,7 +12,9 @@ import adminAddCourse from '@/page/admin/addCourse'
 import adminDelCourse from '@/page/admin/delCourse'
 import adminDownloadDoc from '@/page/admin/downloadDoc'
 import adminAddStu from '@/page/admin/addstu'
-import adminAssignCourse from '@/page/admin/assignCourse.vue'
+import adminAssignCourse from '@/page/admin/assignCourse'
+import Grade from '@/page/teacher/grade'
+import StuInfo from '@/page/teacher/stuInfo'
 
 Vue.use(Router)
 
@@ -121,7 +123,25 @@ const router = new Router({
             auth: true,
             role: 'admin'
           }
-        }
+        },
+        {
+          path: 'grade',
+          name: 'grade',
+          component: Grade,
+          meta: { 
+            auth: true,
+            role: 'teacher'
+          }
+        },
+        {
+          path: 'stuinfo',
+          name: 'stuinfo',
+          component: StuInfo,
+          meta: { 
+            auth: true,
+            role: 'teacher'
+          }
+        },
       ]
     },
     {

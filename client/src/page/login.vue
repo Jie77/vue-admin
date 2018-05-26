@@ -27,10 +27,12 @@ export default {
           message: content,
           type: 'success'
         })
-        if(this.$store.getters.role === 'stu'){
+        if (this.$store.getters.role === 'stu'){
           this.$router.push('/layout/selectcourse')
-        }else if(this.$store.getters.role === 'admin'){
+        } else if (this.$store.getters.role === 'admin'){
           this.$router.push('/layout/adminaddcourse')
+        } else if (this.$store.getters.role === 'teacher'){
+          this.$router.push('/layout/grade')
         }
       }).catch((content) => {
         this.$message.error(content)
