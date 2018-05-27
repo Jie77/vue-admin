@@ -11,19 +11,29 @@ const addCourse = async (ctx, next) => {
     }
     let courseInfo = ctx.request.body
     try {
-        let course = await query('select * from course where cno=?', [courseInfo.cno])
-        if (course.length === 0){
-            await query('insert into course values(?, ?, ?)', [courseInfo.cno, courseInfo.cname, courseInfo.credit])
-            ctx.body = {
-                state: true,
-                content: '添加成功'
+        let teacher = await query('select * from teacher where tno=?', [courseInfo.teacher])
+        if (teacher.length != 0) {
+            let course = await query('select * from course where cno=?', [courseInfo.cno])
+            if (course.length === 0){
+                await query('insert into course values(?, ?, ?)', [courseInfo.cno, courseInfo.cname, courseInfo.credit])
+                await query('insert into ct values(?,?)', [courseInfo.cno, courseInfo.teacher]) 
+                ctx.body = {
+                    state: true,
+                    content: '添加成功'
+                }
+            } else {
+                ctx.body = {
+                    state: false,
+                    content: '该课程已存在'
+                }
             }
         } else {
             ctx.body = {
                 state: false,
-                content: '该课程已存在'
+                content: '该教师不存在'
             }
         }
+        
     } catch(e) {
         console.log('捕获到错误')
         ctx.body = {

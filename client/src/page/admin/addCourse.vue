@@ -14,6 +14,9 @@
                 <el-form-item label="学分" prop="credit">
                     <el-input v-model="ruleForm.credit"></el-input>
                 </el-form-item>
+                <el-form-item label="老师" prop="teacher">
+                    <el-input v-model="ruleForm.teacher"></el-input>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确认添加</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -30,7 +33,8 @@ export default {
             ruleForm: {
                 cname: '',
                 cno: '',
-                credit: ''
+                credit: '',
+                teacher: ''
             },
             rules: {
                 cname: [
@@ -41,6 +45,9 @@ export default {
                 ],
                 credit: [
                     { required: true, message: '请输入学分', trigger: 'blur' },
+                ],
+                teacher: [
+                    { required: true, message: '请输入老师工号', trigger: 'blur' },
                 ]
             }
         }
