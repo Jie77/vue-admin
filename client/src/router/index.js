@@ -1,22 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LayOut from '@/components/layout/layout'
-import Login from '@/page/login'
-import Register from '@/page/register'
-import NotFound from '@/page/notFound'
-import SelectCourse from '@/page/stu/selectCourse'
-import DelCourse from '@/page/stu/delCourse'
-import DownloadDoc from '@/page/stu/downloadDoc'
-import StuDoc from '@/page/stu/stuDoc'
-import adminAddCourse from '@/page/admin/addCourse'
-import adminDelCourse from '@/page/admin/delCourse'
-import adminDownloadDoc from '@/page/admin/downloadDoc'
-import adminAddStu from '@/page/admin/addstu'
-import adminAssignCourse from '@/page/admin/assignCourse'
-import Grade from '@/page/teacher/grade'
-import StuInfo from '@/page/teacher/stuInfo'
-import UploadFile from '@/page/teacher/uploadFile'
-
 Vue.use(Router)
 
 const router = new Router({
@@ -29,17 +12,17 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: resolve => require(['@/page/login'], resolve)
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: resolve => require(['@/page/register'], resolve)
     },
     {
       path: '/layout',
       name: 'layout',
-      component: LayOut,
+      component: resolve => require(['@/components/layout/layout'], resolve),
       meta: { 
         auth: true
       },
@@ -47,7 +30,7 @@ const router = new Router({
         {
           path: 'selectcourse',
           name: 'selectcourse',
-          component: SelectCourse,
+          component: resolve => require(['@/page/stu/selectCourse'], resolve),
           meta: { 
             auth: true,
             role: 'stu'
@@ -56,7 +39,7 @@ const router = new Router({
         {
           path: 'delcourse',
           name: 'delcourse',
-          component: DelCourse,
+          component: resolve => require(['@/page/stu/delCourse'], resolve),
           meta: { 
             auth: true,
             role: 'stu'
@@ -65,7 +48,7 @@ const router = new Router({
         {
           path: 'downloaddoc',
           name: 'downloaddoc',
-          component: DownloadDoc,
+          component: resolve => require(['@/page/stu/downloadDoc'], resolve),
           meta: { 
             auth: true,
             role: 'stu'
@@ -74,7 +57,7 @@ const router = new Router({
         {
           path: 'studoc',
           name: 'studoc',
-          component: StuDoc,
+          component: resolve => require(['@/page/stu/stuDoc'], resolve),
           meta: { 
             auth: true,
             role: 'stu'
@@ -83,7 +66,7 @@ const router = new Router({
         {
           path: 'adminaddcourse',
           name: 'adminaddcourse',
-          component: adminAddCourse,
+          component: resolve => require(['@/page/admin/addCourse'], resolve),
           meta: { 
             auth: true,
             role: 'admin'
@@ -92,7 +75,7 @@ const router = new Router({
         {
           path: 'adminassigncourse',
           name: 'adminassigncourse',
-          component: adminAssignCourse,
+          component: resolve => require(['@/page/admin/assignCourse'], resolve),
           meta: { 
             auth: true,
             role: 'admin'
@@ -101,7 +84,7 @@ const router = new Router({
         {
           path: 'admindelcourse',
           name: 'admindelcourse',
-          component: adminDelCourse,
+          component: resolve => require(['@/page/admin/delCourse'], resolve),
           meta: { 
             auth: true,
             role: 'admin'
@@ -110,7 +93,7 @@ const router = new Router({
         {
           path: 'admindownloaddoc',
           name: 'admindownloaddoc',
-          component: adminDownloadDoc,
+          component: resolve => require(['@/page/admin/downloadDoc'], resolve),
           meta: { 
             auth: true,
             role: 'admin'
@@ -119,7 +102,7 @@ const router = new Router({
         {
           path: 'adminaddstu',
           name: 'adminaddstu',
-          component: adminAddStu,
+          component: resolve => require(['@/page/admin/addstu'], resolve),
           meta: { 
             auth: true,
             role: 'admin'
@@ -128,7 +111,7 @@ const router = new Router({
         {
           path: 'grade',
           name: 'grade',
-          component: Grade,
+          component: resolve => require(['@/page/teacher/grade'], resolve),
           meta: { 
             auth: true,
             role: 'teacher'
@@ -137,7 +120,7 @@ const router = new Router({
         {
           path: 'stuinfo',
           name: 'stuinfo',
-          component: StuInfo,
+          component: resolve => require(['@/page/teacher/stuInfo'], resolve),
           meta: { 
             auth: true,
             role: 'teacher'
@@ -146,7 +129,7 @@ const router = new Router({
         {
           path: 'uploadfile',
           name: 'uploadfile',
-          component: UploadFile,
+          component: resolve => require(['@/page/teacher/uploadFile'], resolve),
           meta: { 
             auth: true,
             role: 'teacher'
@@ -157,7 +140,7 @@ const router = new Router({
     {
       path: '/*',
       name: '404',
-      component: NotFound,
+      component: resolve => require(['@/page/notFound'], resolve),
     }
   ]
 })
